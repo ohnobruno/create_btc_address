@@ -54,13 +54,12 @@ def base58_check_encoding(payload, version=0):
 
     # 3. Concatenate the results of step 1 and the results
     # of step 2 together (bytewise)
-    # 4. The result should be normalized to not have any
-    # leading base-58 zeroes (character '1').
+
     s = version_payload + checksum
 
-    # 5. Each leading zero byte shall be represented by its own character '1'
+    # 4. Each leading zero byte shall be represented by its own character '1'
     # in the final result.
     leading_zeros = _count_leading_chars(s, '0')
 
-    # 6. Concatenate the 1's from step 5 with the results of step 4:
+    # 5. Concatenate the 1's from step 4 with the results of step 3:
     return '1' * leading_zeros + base58encode(int.from_bytes(s, 'big'))

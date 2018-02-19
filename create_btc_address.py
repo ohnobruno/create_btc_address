@@ -2,24 +2,17 @@ import hashlib
 import codecs
 import ecdsa as ecdsa
 import secrets
+import builtins as __builtin__
 
 from base58 import base58_check_encoding, hasher_sha256
+
 """
 https://en.bitcoin.it/wiki/Technical_background_of_version_1_Bitcoin_addresses
 """
 
-def string_separator():
-    print('---------------------------------')
-
-
-def private_key_to_wif(private_hex_key):
-    """
-    Encode the private key to btc base58check algorithm.
-    :param private_hex_key: random 256 bit private key
-    :return: Wallet Import Format key
-    """
-    private_key = codecs.decode(private_hex_key, "hex_codec")
-    return base58_check_encoding(private_key, version=128)
+def print(*args, **kwargs):
+    __builtin__.print(len(*args) * '-')
+    return __builtin__.print(*args, **kwargs)
 
 
 def private_key_to_public_key(private_key):
@@ -64,6 +57,16 @@ def encode_to_btc_addr(hash):
     return '1' + base58_check_encoding(hash, version=0)
 
 
+def private_key_to_wif(private_hex_key):
+    """
+    Encode the private key to btc base58check algorithm.
+    :param private_hex_key: random 256 bit private key
+    :return: Wallet Import Format key
+    """
+    private_key = codecs.decode(private_hex_key, "hex_codec")
+    return base58_check_encoding(private_key, version=128)
+
+
 def private_key_to_btc_public_key(private_key):
     """
     Generate BTC address from a 256 bit private key.
@@ -75,19 +78,15 @@ def private_key_to_btc_public_key(private_key):
             private_key_to_public_key(private_key)))
 
 
-# private_key = secrets.token_hex(32)  # nBytes - 32 Bytes = 256 Bits - 2^256 pos
-# print("Random 256 bits Private Key: " + private_key)  # 256/4 = 64 char in Hexa, 2 char per byte
-# string_separator()
-#
-# print("WIF Private Key: " + private_key_to_wif(private_key))
-# string_separator()
-#
-# pub_key512bit = private_key_to_public_key(private_key)
-# print("512 bit public key with prefix: " + str(pub_key512bit))
-# string_separator()
-#
-# pub_key160bit = public_key_512bit_to_hash_public_key_160bit(pub_key512bit)
-# print("160 bit public key hash: " + str(pub_key160bit))
-# string_separator()
-#
-# print("BTC Address: " + encode_to_btc_addr(pub_key160bit))
+private_key = secrets.token_hex(32)  # nBytes - 32 Bytes = 256 Bits - 2^256 pos
+print("Random 256 bits Private Key: " + private_key)  # 256/4 = 64 char in Hexa, 2 char per byte
+
+pub_key512bit = private_key_to_public_key(private_key)
+print("512 bit public key with prefix: " + str(pub_key512bit))
+
+pub_key160bit = public_key_512bit_to_hash_public_key_160bit(pub_key512bit)
+print("160 bit public key hash: " + str(pub_key160bit))
+
+print("BTC Address: " + encode_to_btc_addr(pub_key160bit))
+
+print("WIF Private Key: " + private_key_to_wif(private_key))
