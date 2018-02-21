@@ -78,15 +78,15 @@ def private_key_to_btc_public_key(private_key):
             private_key_to_public_key(private_key)))
 
 
-private_key = secrets.token_hex(32)  # nBytes - 32 Bytes = 256 Bits - 2^256 pos
-print("Random 256 bits Private Key: " + private_key)  # 256/4 = 64 char in Hexa, 2 char per byte
-
-pub_key512bit = private_key_to_public_key(private_key)
-print("512 bit public key with prefix: " + str(pub_key512bit))
-
-pub_key160bit = public_key_512bit_to_hash_public_key_160bit(pub_key512bit)
-print("160 bit public key hash: " + str(pub_key160bit))
-
-print("BTC Address: " + encode_to_btc_addr(pub_key160bit))
-
-print("WIF Private Key: " + private_key_to_wif(private_key))
+# private_key = secrets.token_hex(32)  # nBytes - 32 Bytes = 256 Bits - 2^256 pos
+# print("Random 256 bits Private Key: " + private_key)  # 256/4 = 64 char in Hexa, 2 char per byte
+#
+# pub_key512bit = private_key_to_public_key(private_key)
+# print("512 bit public key with prefix: " + str(pub_key512bit))
+#
+# pub_key160bit = public_key_512bit_to_hash_public_key_160bit(pub_key512bit)
+# print("160 bit public key hash: " + str(pub_key160bit))
+#
+# print("BTC Address: " + encode_to_btc_addr(pub_key160bit))
+#
+# print("WIF Private Key: " + private_key_to_wif(private_key))
